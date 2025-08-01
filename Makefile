@@ -23,11 +23,11 @@ SRC = ./pkg/c
 TEST_SRC = tests/test_main.cpp
 INCLUDES = -Iinclude
 
-all: reciprocal tests
+all: reciprocal
 
 # test not working currently, dev changes are in progress
-# tests:
-# 	$(CXX) $(CXXFLAGS) $(INCLUDES) -o tests/test_binary $(TEST_SRC)
+tests:
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o tests/test_binary $(TEST_SRC)
 
 reciprocal: $(SRC)/main.o $(SRC)/reciprocal.o
 	g++ $(CFLAGS) -o $(SRC)/reciprocal $(SRC)/main.o $(SRC)/reciprocal.o
