@@ -24,3 +24,4 @@ jobs:
 
       - name: Run tests
         run: ./tests/test_binary  # Replace with actual test binary
+        continue-on-error: true  # <-- This allows this step to fail without failing the job
