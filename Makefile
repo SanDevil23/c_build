@@ -17,8 +17,9 @@
 
 CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++17
+CC=gcc
 
-SRC = pkg/c/main.c
+SRC = ./pkg/c
 TEST_SRC = tests/test_main.cpp
 INCLUDES = -Iinclude
 
@@ -27,14 +28,14 @@ all: reciprocal tests
 tests:
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -o tests/test_binary $(TEST_SRC)
 
-reciprocal: main.o reciprocal.o
-	g++ $(CFLAGS) -o reciprocal main.o reciprocal.o
+reciprocal: $(SRC)/main.o $(SRC)/reciprocal.o
+	g++ $(CFLAGS) -o $(SRC)/reciprocal $(SRC)/main.o $(SRC)/reciprocal.o
 	
-main.o: main.c reciprocal.hpp
-	gcc $(CFLAGS) -c $(SRC)
+main.o: $(SRC)/main.c $(SRC)/reciprocal.hpp
+	gcc $(CFLAGS) -c $(SRC)/main.c
 
-reciprocal.o: reciprocal.cpp reciprocal.hpp
-	g++ $(CFLAGS) -c reciprocal.cpp
+reciprocal.o: $(SRC)/reciprocal.cpp $(SRC)/reciprocal.hpp
+	g++ $(CFLAGS) -c $(SRC)/reciprocal.cpp
 
 clean:
-	rm -f *.o reciprocal
+	rm -f $(SRC)/*.o $(SRC)/reciprocal.exe
