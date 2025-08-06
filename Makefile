@@ -15,14 +15,28 @@
 # Customize compiler settings and source file locations as needed.
 # =============================================================================
 
-reciprocal: main.o reciprocal.o
-	g++ $(CFLAGS) -o reciprocal main.o reciprocal.o
-	
-main.o: main.c reciprocal.hpp
-	gcc $(CFLAGS) -c  main.c
+CXX = g++
+CXXFLAGS = -Wall -Wextra -std=c++17
+CC=gcc
 
-reciprocal.o: reciprocal.cpp reciprocal.hpp
-	g++ $(CFLAGS) -c reciprocal.cpp
+SRC = ./pkg/c
+TEST_SRC = tests/test_main.cpp
+INCLUDES = -Iinclude
+
+all: reciprocal
+
+# test not working currently, dev changes are in progress
+tests:
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o tests/test_binary $(TEST_SRC)
+
+reciprocal: $(SRC)/main.o $(SRC)/reciprocal.o
+	g++ $(CFLAGS) -o $(SRC)/reciprocal $(SRC)/main.o $(SRC)/reciprocal.o
+	
+main.o: $(SRC)/main.c $(SRC)/reciprocal.hpp
+	gcc $(CFLAGS) -c $(SRC)/main.c
+
+reciprocal.o: $(SRC)/reciprocal.cpp $(SRC)/reciprocal.hpp
+	g++ $(CFLAGS) -c $(SRC)/reciprocal.cpp
 
 clean:
-	rm -f *.o reciprocal
+	rm -f $(SRC)/*.o $(SRC)/reciprocal.exe
